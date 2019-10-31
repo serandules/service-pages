@@ -45,7 +45,7 @@ describe('GET /pages', function () {
             should.exist(page.id);
             should.exist(page.user);
             should.exist(page.createdAt);
-            should.exist(page.updatedAt);
+            should.exist(page.modifiedAt);
             should.exist(page.title);
             should.exist(page.body);
             should.not.exist(page._id);

@@ -115,11 +115,11 @@ describe('POST /pages', function () {
 
     var bigger = '';
     var i;
-    for (i = 0; i < 10001; i++) {
+    for (i = 0; i < 200001; i++) {
         bigger += 'x';
     }
 
-    it('with bigger body', function (done) {
+    it.only('with bigger body', function (done) {
       request({
         uri: pot.resolve('accounts', '/apis/v/pages'),
         method: 'POST',
@@ -134,11 +134,11 @@ describe('POST /pages', function () {
         if (e) {
           return done(e);
         }
-        r.statusCode.should.equal(errors.unprocessableEntity().status);
+        r.statusCode.should.equal(errors.payloadTooLarge().status);
         should.exist(b);
         should.exist(b.code);
         should.exist(b.message);
-        b.code.should.equal(errors.unprocessableEntity().data.code);
+        b.code.should.equal(errors.payloadTooLarge().data.code);
         done();
       });
     });
