@@ -68,7 +68,7 @@ describe('GET /pages', function () {
         }, function (created) {
             var page = payload();
             request({
-                uri: pot.resolve('accounts', '/apis/v/pages'),
+                uri: pot.resolve('www', '/apis/v/pages'),
                 method: 'POST',
                 auth: {
                     bearer: user.token
@@ -86,7 +86,7 @@ describe('GET /pages', function () {
                 should.exist(b.body);
                 b.body.should.equal(page.body);
                 should.exist(r.headers['location']);
-                r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/pages/' + b.id));
+                r.headers['location'].should.equal(pot.resolve('www', '/apis/v/pages/' + b.id));
                 created();
             });
         }, done);
@@ -94,7 +94,7 @@ describe('GET /pages', function () {
 
     it('invalid id', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages/undefined'),
+            uri: pot.resolve('www', '/apis/v/pages/undefined'),
             method: 'GET',
             auth: {
                 bearer: client.users[0].token
@@ -115,7 +115,7 @@ describe('GET /pages', function () {
 
     it('owner can access', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages'),
+            uri: pot.resolve('www', '/apis/v/pages'),
             method: 'GET',
             auth: {
                 bearer: client.users[0].token
@@ -131,7 +131,7 @@ describe('GET /pages', function () {
             b.length.should.equal(1);
             validatePages(b);
             request({
-                uri: pot.resolve('accounts', '/apis/v/pages/' + b[0].id),
+                uri: pot.resolve('www', '/apis/v/pages/' + b[0].id),
                 method: 'GET',
                 auth: {
                     bearer: client.users[0].token
@@ -151,7 +151,7 @@ describe('GET /pages', function () {
 
     it('others cannot access', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages'),
+            uri: pot.resolve('www', '/apis/v/pages'),
             method: 'GET',
             auth: {
                 bearer: client.users[0].token
@@ -167,7 +167,7 @@ describe('GET /pages', function () {
             b.length.should.equal(1);
             validatePages(b);
             request({
-                uri: pot.resolve('accounts', '/apis/v/pages/' + b[0].id),
+                uri: pot.resolve('www', '/apis/v/pages/' + b[0].id),
                 method: 'GET',
                 auth: {
                     bearer: client.users[1].token
@@ -189,7 +189,7 @@ describe('GET /pages', function () {
 
     it('can be accessed by anyone when public', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages'),
+            uri: pot.resolve('www', '/apis/v/pages'),
             method: 'GET',
             auth: {
                 bearer: client.users[0].token
@@ -206,7 +206,7 @@ describe('GET /pages', function () {
             validatePages(b);
             var page = b[0];
             request({
-                uri: pot.resolve('accounts', '/apis/v/pages/' + page.id),
+                uri: pot.resolve('www', '/apis/v/pages/' + page.id),
                 method: 'GET',
                 auth: {
                     bearer: client.users[1].token
@@ -222,7 +222,7 @@ describe('GET /pages', function () {
                 should.exist(b.message);
                 b.code.should.equal(errors.notFound().data.code);
                 request({
-                    uri: pot.resolve('accounts', '/apis/v/pages/' + page.id),
+                    uri: pot.resolve('www', '/apis/v/pages/' + page.id),
                     method: 'GET',
                     auth: {
                         bearer: client.users[1].token
@@ -242,7 +242,7 @@ describe('GET /pages', function () {
                             return done(err);
                         }
                         request({
-                            uri: pot.resolve('accounts', '/apis/v/pages/' + page.id),
+                            uri: pot.resolve('www', '/apis/v/pages/' + page.id),
                             method: 'GET',
                             auth: {
                                 bearer: client.users[1].token
@@ -256,7 +256,7 @@ describe('GET /pages', function () {
                             should.exist(b);
                             validatePages([b]);
                             request({
-                                uri: pot.resolve('accounts', '/apis/v/pages/' + page.id),
+                                uri: pot.resolve('www', '/apis/v/pages/' + page.id),
                                 method: 'GET',
                                 auth: {
                                     bearer: client.users[2].token

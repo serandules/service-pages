@@ -24,7 +24,7 @@ describe('POST /pages', function () {
 
     it('with no media type', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages'),
+            uri: pot.resolve('www', '/apis/v/pages'),
             method: 'POST',
             auth: {
                 bearer: client.users[0].token
@@ -45,7 +45,7 @@ describe('POST /pages', function () {
 
     it('with unsupported media type', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages'),
+            uri: pot.resolve('www', '/apis/v/pages'),
             method: 'POST',
             headers: {
                 'Content-Type': 'application/xml'
@@ -69,7 +69,7 @@ describe('POST /pages', function () {
 
     it('without title', function (done) {
       request({
-        uri: pot.resolve('accounts', '/apis/v/pages'),
+        uri: pot.resolve('www', '/apis/v/pages'),
         method: 'POST',
         json: {
           body: 'This is a sample page'
@@ -92,7 +92,7 @@ describe('POST /pages', function () {
 
     it('without body', function (done) {
       request({
-        uri: pot.resolve('accounts', '/apis/v/pages'),
+        uri: pot.resolve('www', '/apis/v/pages'),
         method: 'POST',
         json: {
           title: 'Title'
@@ -119,9 +119,9 @@ describe('POST /pages', function () {
         bigger += 'x';
     }
 
-    it.only('with bigger body', function (done) {
+    it('with bigger body', function (done) {
       request({
-        uri: pot.resolve('accounts', '/apis/v/pages'),
+        uri: pot.resolve('www', '/apis/v/pages'),
         method: 'POST',
         json: {
           title: 'Title',
@@ -145,7 +145,7 @@ describe('POST /pages', function () {
 
     it('valid', function (done) {
         request({
-            uri: pot.resolve('accounts', '/apis/v/pages'),
+            uri: pot.resolve('www', '/apis/v/pages'),
             method: 'POST',
             json: data,
             auth: {
@@ -162,7 +162,7 @@ describe('POST /pages', function () {
             should.exist(b.body);
             b.body.should.equal(data.body);
             should.exist(r.headers['location']);
-            r.headers['location'].should.equal(pot.resolve('accounts', '/apis/v/pages/' + b.id));
+            r.headers['location'].should.equal(pot.resolve('www', '/apis/v/pages/' + b.id));
             done();
         });
     });
